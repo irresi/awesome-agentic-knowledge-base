@@ -1,0 +1,42 @@
+# Reference clones — local research material, not part of the repo
+awesome-ai-agents/
+awesome-llm-knowledge-systems/
+reference/
+
+# Maintainer-private design docs and gstack scratch
+docs/superpowers/
+
+# Local needs research / recipe drafts (not part of the published map)
+needs.md
+recipes/
+
+# Pre-empirical hand-curated edition (kept locally for reference, not published)
+README.legacy.md
+
+# Maintainer working notes on the curation pass — internal, not for readers
+LESSONS.md
+
+# Curation pipeline state (candidate queue, promotion tracking) — internal
+surveys/_index.json
+
+# Ephemeral repo clones used by the curating-agentic-kbs skill
+surveys/_clones/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python (in case lint script becomes Python)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node (in case future tooling)
+node_modules/
+
+# Cron / loop state from the curating-agentic-kbs skill
+.claude/
