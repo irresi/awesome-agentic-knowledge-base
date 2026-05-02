@@ -6,9 +6,8 @@ reference/
 # Maintainer-private design docs and gstack scratch
 docs/superpowers/
 
-# Local needs research / recipe drafts (not part of the published map)
+# Local needs research (not part of the published map)
 needs.md
-recipes/
 
 # Pre-empirical hand-curated edition (kept locally for reference, not published)
 README.legacy.md
