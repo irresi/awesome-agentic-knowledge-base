@@ -4,8 +4,6 @@
   An empirical map of knowledge base systems in top AI agents. Components are code-verified from high-star GitHub repositories and ranked strictly by actual adoption frequency, not vendor claims.
 </p>
 
-> *Living document — manually verified, contributions welcome.*
-
 ## TL;DR — what 46 trending open-source ai-agent repos actually use
 
 - 20 of 46 (43%) use LLM-based entity extraction — but **4 ship serviceable KBs without any LLM cost** (basic-memory, aider, memvid, code-review-graph)
