@@ -10,7 +10,7 @@
 
 > *Code-verified, not vendor-described. Cohort selected by GitHub stars; components ranked by how many cohort repos actually adopt them.*
 
-## TL;DR — what 46 trending ai-agent repos actually use
+## TL;DR — what 46 trending open-source ai-agent repos actually use
 
 - **20 of 46 (43%)** use LLM-based entity extraction — but **4 ship serviceable KBs without any LLM cost** (basic-memory, aider, memvid, code-review-graph)
 - **18 of 46 (39%)** expose MCP servers, **17 (37%)** are MCP clients, **9 (20%) intentionally avoid MCP** (all libraries / pipelines / plugins / infra)
@@ -20,9 +20,9 @@
 
 Numbers are cohort-wide (n=46) unless an alternative `n` is noted. Every claim links to an individual repo survey under [`surveys/`](./surveys/).
 
-## Cohort
+## Open-source repos
 
-46 trending ai-agent repos, sorted by GitHub star count. **kb-app is the largest category (15 repos)**, followed by memory-framework (12), wiki-compiler (6), coding-agent (5), graphrag (3), infra-layer (3), and kb-framework (2: llama_index + haystack) — both downstream aggregators of much of the rest of the cohort.
+46 trending open-source ai-agent repos (the **cohort**), sorted by GitHub star count. **kb-app is the largest category (15 repos)**, followed by memory-framework (12), wiki-compiler (6), coding-agent (5), graphrag (3), infra-layer (3), and kb-framework (2: llama_index + haystack) — both downstream aggregators of much of the rest of the cohort.
 
 **Categories**
 
