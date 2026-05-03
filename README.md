@@ -8,21 +8,31 @@
 
 > *Living document — surveys verified manually, contributions welcome.*
 
+> *Code-verified, not vendor-described. Cohort selected by GitHub stars; components ranked by how many cohort repos actually adopt them.*
+
 ## TL;DR — what 46 trending ai-agent repos actually use
 
-- **43%** of cohort uses LLM-based entity extraction — but **4 repos ship serviceable KBs without any LLM cost** (basic-memory, aider, memvid, code-review-graph)
-- **39%** expose MCP servers, **37%** are MCP clients — **20% intentionally avoid MCP** (all libraries / pipelines / plugins, never products)
-- **Postgres leads metadata** (34% of n=41 with a DB), **pgvector leads vector backends** (18% of n=39 with vectors), Redis is the default cache (17% of cohort)
-- **Graph DBs stay niche** — 12 repos use no graph at all; in-process NetworkX is more common than Neo4j
-- **"No DB at all" is now its own camp** (5 repos, 5 different shapes — from `.json` files to a single `.mv2` binary to Obsidian vaults)
+- **20 of 46 (43%)** use LLM-based entity extraction — but **4 ship serviceable KBs without any LLM cost** (basic-memory, aider, memvid, code-review-graph)
+- **18 of 46 (39%)** expose MCP servers, **17 (37%)** are MCP clients, **9 (20%) intentionally avoid MCP** (all libraries / pipelines / plugins / infra)
+- **Postgres leads metadata** (14 of 41 with a DB, 34%), **pgvector leads vector backends** (7 of 39 with vectors, 18%), Redis the default cache (8 of 46, 17%)
+- **Graph DBs stay niche** — 12 repos use no graph at all; in-process NetworkX more common than Neo4j
+- **"No DB at all" is now its own camp** — 5 repos, 5 different shapes (from `.json` files to a single `.mv2` binary to Obsidian vaults)
 
-Every claim links to an individual repo survey under [`surveys/`](./surveys/).
+Numbers are cohort-wide (n=46) unless an alternative `n` is noted. Every claim links to an individual repo survey under [`surveys/`](./surveys/).
 
 ## Cohort
 
 46 trending ai-agent repos, sorted by GitHub star count. **kb-app is the largest category (15 repos)**, followed by memory-framework (12), wiki-compiler (6), coding-agent (5), graphrag (3), infra-layer (3), and kb-framework (2: llama_index + haystack) — both downstream aggregators of much of the rest of the cohort.
 
-**Categories** — `kb-app` (deployable KB product end-users / admins run as a service) · `memory-framework` (library specialized for agent memory; `pip install` / `npm install`) · `wiki-compiler` (code or docs → human-readable wiki) · `coding-agent` (IDE-side agent harness with its own KB) · `graphrag` (LLM-extracted KG + retrieval, library-shaped) · `infra-layer` (DB / federation engine other agents consume) · `kb-framework` (general-purpose RAG/agent aggregator framework — llama_index, haystack).
+**Categories**
+
+- `kb-app` — deployable KB product end-users / admins run as a service
+- `memory-framework` — library specialized for agent memory (`pip` / `npm install`)
+- `wiki-compiler` — code or docs → human-readable wiki
+- `coding-agent` — IDE-side agent harness with its own KB
+- `graphrag` — LLM-extracted KG + retrieval, library-shaped
+- `infra-layer` — DB / federation engine other agents consume
+- `kb-framework` — general-purpose RAG/agent aggregator (llama_index, haystack)
 
 | Repo | Category | What it is |
 |---|---|---|
