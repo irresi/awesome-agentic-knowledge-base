@@ -12,13 +12,14 @@
 
 ## TL;DR — what 46 trending open-source ai-agent repos actually use
 
-- **20 of 46 (43%)** use LLM-based entity extraction — but **4 ship serviceable KBs without any LLM cost** (basic-memory, aider, memvid, code-review-graph)
-- **18 of 46 (39%)** expose MCP servers, **17 (37%)** are MCP clients, **9 (20%) intentionally avoid MCP** (all libraries / pipelines / plugins / infra)
-- **Postgres leads metadata** (14 of 41 with a DB, 34%), **pgvector leads vector backends** (7 of 39 with vectors, 18%), Redis the default cache (8 of 46, 17%)
-- **Graph DBs stay niche** — 12 repos use no graph at all; in-process NetworkX more common than Neo4j
-- **"No DB at all" is now its own camp** — 5 repos, 5 different shapes (from `.json` files to a single `.mv2` binary to Obsidian vaults)
+- 20 of 46 (43%) use LLM-based entity extraction — but **4 ship serviceable KBs without any LLM cost** (basic-memory, aider, memvid, code-review-graph)
+- 18 of 46 expose MCP servers, 17 are clients — **9 intentionally avoid MCP** (all libraries / pipelines / plugins / infra)
+- Postgres leads metadata, pgvector leads vector backends, Redis is the default cache — full breakdown in [Adoption — Storage](#adoption--storage)
+- 12 repos use no graph at all — **in-process NetworkX is more common than Neo4j**
+- "No DB at all" is now its own camp — **5 repos, 5 different shapes** (from `.json` files to a single `.mv2` binary to Obsidian vaults)
+- License hardens with deployment shape: **library → product → infra mirrors MIT → AGPL → ELv2/SSPL**
 
-Numbers are cohort-wide (n=46) unless an alternative `n` is noted. Every claim links to an individual repo survey under [`surveys/`](./surveys/).
+> Numbers are cohort-wide (n=46) unless noted. Adoption tables below switch to role-conditional denominators (e.g. `n=39` for vector adopters). Every claim links to an individual repo survey under [`surveys/`](./surveys/).
 
 ## Open-source repos
 
