@@ -1,8 +1,26 @@
-# Surveyed repos
+# Per-repo surveys (n=46)
 
-Per-repo summaries in cohort-table order (highest stars first). Each entry has the headline pitch and 3–5 distinctive bullets; click through to the full survey for the complete report.
+One section per cohort entry — headline pitch + 3–5 distinctive bullets. Click through for the full code-reading report. Body order is by star count (highest first); use the index below to jump by category.
 
 For the cohort-wide map, adoption tables, and patterns, see [`../README.md`](../README.md).
+
+---
+
+## Index
+
+**kb-app (15)** — [ragflow](#infiniflowragflow) · [anything-llm](#mintplex-labsanything-llm) · [khoj](#khoj-aikhoj) · [AstrBot](#astrbotdevsastrbot) · [onyx](#onyx-dot-apponyx) · [sim](#simstudioaisim) · [composio](#composiohqcomposio) · [FastGPT](#labringfastgpt) · [DeepTutor](#hkudsdeeptutor) · [MaxKB](#1panel-devmaxkb) · [DocsGPT](#arc53docsgpt) · [WeKnora](#tencentweknora) · [SurfSense](#modsettersurfsense) · [context-mode](#mksglucontext-mode) · [Yuxi](#xerrorsyuxi)
+
+**memory-framework (12)** — [mem0](#mem0aimem0) · [graphiti](#getzepgraphiti) · [OpenViking](#volcengineopenviking) · [letta](#letta-ailetta) · [cognee](#topoteretescognee) · [memvid](#memvidmemvid) · [memU](#nevamind-aimemu) · [hindsight](#vectorize-iohindsight) · [MemOS](#memtensormemos) · [byterover-cli](#campfireinbyterover-cli) · [honcho](#plastic-labshoncho) · [basic-memory](#basicmachines-cobasic-memory)
+
+**wiki-compiler (6)** — [graphify](#safishamsigraphify) · [GitNexus](#abhigyanpatwarigitnexus) · [deepwiki-open](#asyncfuncaideepwiki-open) · [code-review-graph](#tirth8205code-review-graph) · [Understand-Anything](#lum1104understand-anything) · [claude-obsidian](#agricidanielclaude-obsidian)
+
+**coding-agent (5)** — [OpenHands](#openhandsopenhands) · [claude-mem](#thedotmackclaude-mem) · [deer-flow](#bytedancedeer-flow) · [cline](#clinecline) · [aider](#aider-aiaider)
+
+**graphrag (3)** — [LightRAG](#hkudslightrag) · [microsoft/graphrag](#microsoftgraphrag) · [fast-graphrag](#circlemind-aifast-graphrag)
+
+**infra-layer (3)** — [mindsdb](#mindsdbmindsdb) · [FalkorDB](#falkordbfalkordb) · [memgraph](#memgraphmemgraph)
+
+**kb-framework (2)** — [llama_index](#run-llamallama_index) · [haystack](#deepset-aihaystack)
 
 ---
 
@@ -431,7 +449,7 @@ Research-grade memory framework; paper [arXiv:2507.03724](https://arxiv.org/abs/
 - **Hookable plugin system** with 4-function API (`register_hook` / `register_hooks` / `trigger_hook` / `@hookable`); FastMCP server
 - 4 shipped apps (cloud-and-self-hosted-plugin-pair pattern); benchmark claims +43.70% vs OpenAI Memory backed by paper + open eval
 
-## [xerrors/Yuxi (语析)](https://github.com/xerrors/Yuxi)
+## [xerrors/Yuxi](https://github.com/xerrors/Yuxi)
 *kb-app · MIT · [survey](xerrors__Yuxi.md)*
 
 CN-language multi-tenant Agent Harness explicitly built on LightRAG + Vue + FastAPI + LangGraph v1.
@@ -530,4 +548,6 @@ Local-first Zettelkasten + KG over markdown files — the cohort's only files-as
 - Bidirectional file ↔ DB sync via watchfiles
 - Ships in Smithery's MCP catalog
 
-<!-- AUTO:END -->
+---
+
+← Back to [cohort map, adoption tables, and patterns](../README.md).
