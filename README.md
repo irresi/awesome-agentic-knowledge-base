@@ -6,7 +6,18 @@
   by adoption frequency across the surveyed cohort, not by fame.
 </p>
 
-> ⚠️ **Status: Under Review & Beta.** This map is being verified manually.
+> *Living document — surveys verified manually, contributions welcome.*
+
+## TL;DR — what 46 trending agentic repos actually use
+
+- **67%** use LLM-based entity extraction — but **4 repos ship serviceable KBs without any LLM cost** (basic-memory, aider, memvid, code-review-graph)
+- **60%** expose MCP servers, **57%** are MCP clients — **30% intentionally avoid MCP** (all libraries / pipelines / plugins, never products)
+- **Postgres dominates metadata (47%)**, pgvector leads vector backends (23%), Redis is the default cache (27%)
+- **Graph DBs stay niche** — 12 repos use no graph at all; in-process NetworkX is more common than Neo4j
+- **"No DB at all" is now its own camp** (5 repos, 5 different shapes — from `.json` files to a single `.mv2` binary to Obsidian vaults)
+- **License hardens predictably**: library → product → infra (MIT → AGPL → ELv2/SSPL)
+
+Every claim links to an individual repo survey under [`surveys/`](./surveys/).
 
 ## Cohort
 
