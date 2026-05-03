@@ -8,20 +8,21 @@
 
 > *Living document — surveys verified manually, contributions welcome.*
 
-## TL;DR — what 46 trending agentic repos actually use
+## TL;DR — what 46 trending ai-agent repos actually use
 
-- **67%** use LLM-based entity extraction — but **4 repos ship serviceable KBs without any LLM cost** (basic-memory, aider, memvid, code-review-graph)
-- **60%** expose MCP servers, **57%** are MCP clients — **30% intentionally avoid MCP** (all libraries / pipelines / plugins, never products)
-- **Postgres dominates metadata (47%)**, pgvector leads vector backends (23%), Redis is the default cache (27%)
+- **43%** of cohort uses LLM-based entity extraction — but **4 repos ship serviceable KBs without any LLM cost** (basic-memory, aider, memvid, code-review-graph)
+- **39%** expose MCP servers, **37%** are MCP clients — **20% intentionally avoid MCP** (all libraries / pipelines / plugins, never products)
+- **Postgres leads metadata** (34% of n=41 with a DB), **pgvector leads vector backends** (18% of n=39 with vectors), Redis is the default cache (17% of cohort)
 - **Graph DBs stay niche** — 12 repos use no graph at all; in-process NetworkX is more common than Neo4j
 - **"No DB at all" is now its own camp** (5 repos, 5 different shapes — from `.json` files to a single `.mv2` binary to Obsidian vaults)
-- **License hardens predictably**: library → product → infra (MIT → AGPL → ELv2/SSPL)
 
 Every claim links to an individual repo survey under [`surveys/`](./surveys/).
 
 ## Cohort
 
-46 trending agentic repos, sorted by GitHub star count. **kb-app is the largest category (16 repos)**, followed by memory-framework (12), wiki-compiler (6), coding-agent (5), graphrag (3), infra-layer (3), and llama_index as the sole kb-framework — making it a downstream aggregator of much of the rest of the cohort.
+46 trending ai-agent repos, sorted by GitHub star count. **kb-app is the largest category (15 repos)**, followed by memory-framework (12), wiki-compiler (6), coding-agent (5), graphrag (3), infra-layer (3), and kb-framework (2: llama_index + haystack) — both downstream aggregators of much of the rest of the cohort.
+
+**Categories** — `kb-app` (deployable KB product end-users / admins run as a service) · `memory-framework` (library specialized for agent memory; `pip install` / `npm install`) · `wiki-compiler` (code or docs → human-readable wiki) · `coding-agent` (IDE-side agent harness with its own KB) · `graphrag` (LLM-extracted KG + retrieval, library-shaped) · `infra-layer` (DB / federation engine other agents consume) · `kb-framework` (general-purpose RAG/agent aggregator framework — llama_index, haystack).
 
 | Repo | Category | What it is |
 |---|---|---|
@@ -46,7 +47,7 @@ Every claim links to an individual repo survey under [`surveys/`](./surveys/).
 | [ComposioHQ/composio](https://github.com/ComposioHQ/composio) | kb-app | Toolkit-routing-as-service; 1000+ third-party-tool integrations + per-user isolated MCP sessions ([survey](surveys/ComposioHQ__composio.md)) |
 | [labring/FastGPT](https://github.com/labring/FastGPT) | kb-app | TypeScript-first kb + visual workflow platform; pgvector/Milvus/OceanBase + MongoDB metadata ([survey](surveys/labring__FastGPT.md)) |
 | [getzep/graphiti](https://github.com/getzep/graphiti) | memory-framework | Bi-temporal KG library; every edge carries 4 temporal fields, Neo4j/FalkorDB/Kuzu/Neptune backends ([survey](surveys/getzep__graphiti.md)) |
-| [deepset-ai/haystack](https://github.com/deepset-ai/haystack) | kb-app | Component-pipeline RAG framework; 24 component categories + 50+ vector-backend sibling packages ([survey](surveys/deepset-ai__haystack.md)) |
+| [deepset-ai/haystack](https://github.com/deepset-ai/haystack) | kb-framework | Component-pipeline RAG framework; 24 component categories + 50+ vector-backend sibling packages ([survey](surveys/deepset-ai__haystack.md)) |
 | [volcengine/OpenViking](https://github.com/volcengine/OpenViking) | memory-framework | ByteDance Volcengine "Context Database for AI Agents"; filesystem-paradigm context with 7 backend plugins ([survey](surveys/volcengine__OpenViking.md)) |
 | [HKUDS/DeepTutor](https://github.com/HKUDS/DeepTutor) | kb-app | Agent-Native Personalized Tutoring; versioned KB indexes + scheduled TutorBot subsystem ([survey](surveys/HKUDS__DeepTutor.md)) |
 | [letta-ai/letta](https://github.com/letta-ai/letta) | memory-framework | The original MemGPT; agent-self-managed memory blocks + 50 explicitly normalized ORM tables ([survey](surveys/letta-ai__letta.md)) |
@@ -76,24 +77,24 @@ Every claim links to an individual repo survey under [`surveys/`](./surveys/).
 
 Storage breaks down into seven roles. **Vector stores** dominate the cohort (only 7 repos run none); **Postgres and SQLite** dominate metadata; **Redis** is the standard cache; **S3-compatible blob storage** is universal among production-shaped kb-apps. **Graph storage** stays niche — most cohort repos either skip graphs entirely or run an in-process NetworkX. **Embedders** are split between local sentence-transformers and cloud APIs. A small but distinctive **Markdown-filesystem camp** treats `.md` files as the primary KB substrate (sometimes with a derived DB index, sometimes with no DB at all).
 
-### Vector store
+### Vector store (n=39)
 
-| Component | Used by | % | Trade-offs |
+| Component | Used by | Adoption | Trade-offs |
 |---|---|---|---|
-| pgvector | mem0, FastGPT, cognee, khoj, MaxKB, WeKnora, letta | 23% | Postgres-stack ops; cohort's most-adopted vector backend |
-| Milvus | mem0, FastGPT, LightRAG, WeKnora, MemOS | 17% | mature pure-vector engine, separate service |
-| OpenSearch | ragflow, mem0, graphiti, LightRAG, onyx | 17% | strong full-text + vector, JVM ops |
-| Faiss | mem0, LightRAG, AstrBot, deepwiki-open | 13% | embeddable C++ library, search-only |
-| Qdrant | mem0, LightRAG, WeKnora, MemOS | 13% | Rust + good filtering, separate service |
-| ChromaDB | mem0, cognee, claude-mem (via stdio MCP) | 10% | embeddable; claude-mem skips the npm package by going stdio-MCP |
-| Elasticsearch | ragflow, mem0, WeKnora | 10% | mature hybrid search, JVM ops |
-| Pinecone | mem0, letta | 7% | managed serverless vector DB |
-| Turbopuffer | mem0, letta | 7% | serverless vector with per-namespace isolation |
-| SQLite-FTS5 + optional vectors | basic-memory, code-review-graph | 7% | minimum-viable hybrid search inside one SQLite file |
-| LanceDB | cognee, graphrag (default) | 7% | embedded columnar; ships as the GraphRAG default |
-| Azure AI Search | mem0, graphrag | 7% | hosted hybrid retrieval, vendor-tied |
-| Weaviate | mem0, WeKnora | 7% | graph-aware vector with native multi-tenancy |
-| sqlite-vec | basic-memory, WeKnora | 7% | embedded vector for SQLite |
+| pgvector | mem0, FastGPT, cognee, khoj, MaxKB, WeKnora, letta | 18% | Postgres-stack ops; cohort's most-adopted vector backend |
+| Milvus | mem0, FastGPT, LightRAG, WeKnora, MemOS | 13% | mature pure-vector engine, separate service |
+| OpenSearch | ragflow, mem0, graphiti, LightRAG, onyx | 13% | strong full-text + vector, JVM ops |
+| Faiss | mem0, LightRAG, AstrBot, deepwiki-open | 10% | embeddable C++ library, search-only |
+| Qdrant | mem0, LightRAG, WeKnora, MemOS | 10% | Rust + good filtering, separate service |
+| ChromaDB | mem0, cognee, claude-mem (via stdio MCP) | 8% | embeddable; claude-mem skips the npm package by going stdio-MCP |
+| Elasticsearch | ragflow, mem0, WeKnora | 8% | mature hybrid search, JVM ops |
+| Pinecone | mem0, letta | 5% | managed serverless vector DB |
+| Turbopuffer | mem0, letta | 5% | serverless vector with per-namespace isolation |
+| SQLite-FTS5 + optional vectors | basic-memory, code-review-graph | 5% | minimum-viable hybrid search inside one SQLite file |
+| LanceDB | cognee, graphrag (default) | 5% | embedded columnar; ships as the GraphRAG default |
+| Azure AI Search | mem0, graphrag | 5% | hosted hybrid retrieval, vendor-tied |
+| Weaviate | mem0, WeKnora | 5% | graph-aware vector with native multi-tenancy |
+| sqlite-vec | basic-memory, WeKnora | 5% | embedded vector for SQLite |
 
 **No vector store in core** — 7 repos: cline, aider, OpenHands (orchestrator), Understand-Anything, byterover-cli (delegates to swarm router), deer-flow (per-skill external services), haystack (core ships `InMemoryDocumentStore` only; production backends in 50+ sibling packages).
 
@@ -109,14 +110,14 @@ Storage breaks down into seven roles. **Vector stores** dominate the cohort (onl
 - WeKnora — Neo4j-as-vector
 - OpenViking — filesystem-paradigm context with L0/L1/L2 tiered embedding
 
-### Graph store
+### Graph store (n=34)
 
-| Component | Used by | % | Trade-offs |
+| Component | Used by | Adoption | Trade-offs |
 |---|---|---|---|
-| Neo4j | graphiti, cognee, LightRAG, WeKnora, MemOS | 17% | mature Cypher + vector index, heavy ops |
-| NetworkX (in-process) | ragflow, LightRAG, graphrag, haystack | 13% | zero-ops |
-| Kuzu | graphiti, cognee | 7% | embeddable, smaller community |
-| AWS Neptune | graphiti, cognee | 7% | managed + AWS-native; vendor-lock |
+| Neo4j | graphiti, cognee, LightRAG, WeKnora, MemOS | 15% | mature Cypher + vector index, heavy ops |
+| NetworkX (in-process) | ragflow, LightRAG, graphrag, haystack | 12% | zero-ops |
+| Kuzu | graphiti, cognee | 6% | embeddable, smaller community |
+| AWS Neptune | graphiti, cognee | 6% | managed + AWS-native; vendor-lock |
 
 **No graph at all** — 12 repos: mem0 (graph removed in v3 — built-in entity linking instead), FastGPT, basic-memory, OpenHands, claude-mem, cline, aider, khoj, AstrBot, MaxKB, deepwiki-open, deer-flow.
 
@@ -130,14 +131,14 @@ Storage breaks down into seven roles. **Vector stores** dominate the cohort (onl
 - MemOS — PolarDB
 - code-review-graph — SQLite-backed graph with BFS impact analysis + Leiden community detection (cohort second after graphrag)
 
-### Metadata / structured store
+### Metadata / structured store (n=41)
 
-| Component | Used by | % | Trade-offs |
+| Component | Used by | Adoption | Trade-offs |
 |---|---|---|---|
-| Postgres | mem0, FastGPT, cognee, basic-memory, OpenHands, LightRAG, khoj, onyx, MaxKB, WeKnora, MemOS, deer-flow (opt-in), letta, memU | 47% | de-facto cohort default for ops-grade metadata |
-| SQLite | cognee, basic-memory, claude-mem, aider (diskcache), AstrBot, WeKnora, deer-flow, code-review-graph, memU | 30% | embedded, zero-ops; single-machine ceiling |
-| MongoDB | FastGPT, LightRAG | 7% | document-store; rich querying |
-| MySQL | ragflow, MemOS | 7% | CN-cloud-friendly metadata store |
+| Postgres | mem0, FastGPT, cognee, basic-memory, OpenHands, LightRAG, khoj, onyx, MaxKB, WeKnora, MemOS, deer-flow (opt-in), letta, memU | 34% | de-facto cohort default for ops-grade metadata |
+| SQLite | cognee, basic-memory, claude-mem, aider (diskcache), AstrBot, WeKnora, deer-flow, code-review-graph, memU | 22% | embedded, zero-ops; single-machine ceiling |
+| MongoDB | FastGPT, LightRAG | 5% | document-store; rich querying |
+| MySQL | ragflow, MemOS | 5% | CN-cloud-friendly metadata store |
 
 **File-only no-DB camp** — 5 repos:
 
@@ -172,11 +173,11 @@ Storage breaks down into seven roles. **Vector stores** dominate the cohort (onl
 
 **Why this is its own substrate, not just "no-DB":** Markdown files are *human-editable + git-friendly* — readers and agents update the same artifacts. The 4 entries above all let humans drop into the same files the agent reads/writes; that bidirectional ergonomic is what distinguishes Markdown from JSON-blob storage (Understand-Anything, byterover-cli, memvid).
 
-### Cache / queue
+### Cache / queue (n=46)
 
-| Component | Used by | % | Trade-offs |
+| Component | Used by | Adoption | Trade-offs |
 |---|---|---|---|
-| Redis / Valkey | ragflow, FastGPT, cognee, OpenHands, LightRAG, onyx, MaxKB, WeKnora | 27% | ubiquitous, adds another service |
+| Redis / Valkey | ragflow, FastGPT, cognee, OpenHands, LightRAG, onyx, MaxKB, WeKnora | 17% | ubiquitous, adds another service |
 
 **Singletons** (1 repo only):
 
@@ -190,43 +191,43 @@ Storage breaks down into seven roles. **Vector stores** dominate the cohort (onl
 
 ### Blob + Embedder
 
-**Blob storage**
+**Blob storage (n=46)**
 
-| Backend | Used by | % |
+| Backend | Used by | Adoption |
 |---|---|---|
-| S3-compatible | ragflow, FastGPT, OpenHands, onyx, WeKnora | 17% |
-| MinIO (explicit) | ragflow, FastGPT, onyx, WeKnora | 13% |
+| S3-compatible | ragflow, FastGPT, OpenHands, onyx, WeKnora | 11% |
+| MinIO (explicit) | ragflow, FastGPT, onyx, WeKnora | 9% |
 
 **Singletons / notable:**
 
 - Azure Blob Storage — graphrag
 - 6-backend blob factory (COS / OSS / TOS / MinIO / S3 / local) — WeKnora
 
-**Embedders**
+**Embedders (n=39)**
 
-| Pattern | Used by | % |
+| Pattern | Used by | Adoption |
 |---|---|---|
-| sentence-transformers local (bi-encoder + cross-encoder) | ragflow, mem0, graphiti, khoj, onyx, MaxKB, WeKnora | 23% |
-| fastembed local ONNX | cognee, basic-memory | 7% |
+| sentence-transformers local (bi-encoder + cross-encoder) | ragflow, mem0, graphiti, khoj, onyx, MaxKB, WeKnora | 18% |
+| fastembed local ONNX | cognee, basic-memory | 5% |
 
 **Singletons / notable:**
 
 - ONNX + CLIP + Whisper with shipped mel-filterbank bytes — memvid
 - Embeddings stored as `number[]` arrays directly on graph-node JSON records + 15-line vanilla-JS cosine similarity — Understand-Anything
 
-## Adoption — Ingestion / Extraction
+## Adoption — Ingestion / Extraction (n=46)
 
-**LLM-based entity / fact extraction is the cohort default at 67%**, but mechanical (non-LLM) extraction is a real counter-current — basic-memory, aider, memvid, and code-review-graph all ship serviceable KBs without any LLM cost. The cohort splits roughly evenly between "agent ingests documents" (50%) and "agent ingests conversations / sessions" (50%), with tree-sitter-based code awareness as the most common specialized track.
+**LLM-based entity / fact extraction is the cohort default at 43%**, but mechanical (non-LLM) extraction is a real counter-current — basic-memory, aider, memvid, and code-review-graph all ship serviceable KBs without any LLM cost. The cohort splits roughly evenly between "agent ingests documents" (33%) and "agent ingests conversations / sessions" (33%), with tree-sitter-based code awareness as the most common specialized track.
 
-| Pattern | Used by | % | Trade-offs |
+| Pattern | Used by | Adoption | Trade-offs |
 |---|---|---|---|
-| LLM-based entity / fact extraction | ragflow, mem0, graphiti, cognee, claude-mem, LightRAG, khoj, graphrag, onyx, MaxKB, WeKnora, Understand-Anything, MemOS, byterover-cli, deer-flow, haystack, OpenViking, deepwiki-open, memU, claude-obsidian (Claude reads source → extracts entities/concepts → wikilinked Obsidian Markdown pages) | 67% | quality high, cost scales with corpus / turns |
-| Document inputs (PDF / DOCX / MD …) | ragflow, FastGPT, cognee, basic-memory, LightRAG, khoj, graphrag, AstrBot, onyx, MaxKB, memvid, WeKnora, haystack, OpenViking, letta | 50% | broad source coverage, may need OCR/layout |
-| Per-format / specialized chunking | ragflow, FastGPT, cognee, graphrag, AstrBot, onyx, MaxKB, memvid, WeKnora, Understand-Anything, haystack | 37% | strong on document variety, more code surface |
-| Conversation / episode / session inputs | ragflow, mem0, graphiti, cognee, OpenHands, claude-mem, khoj, MaxKB, WeKnora, MemOS, byterover-cli, deer-flow, OpenViking, letta, memU | 50% | hands-off DX for agent memory |
-| Tree-sitter for code awareness | claude-mem, cline, aider, Understand-Anything, code-review-graph (32 languages incl. Vue SFC, Solidity, Dart, R, Perl, Lua, Jupyter / Databricks notebooks) | 17% | language-aware extraction |
-| Hand-curated markdown KB (rules / notes / microagents) | basic-memory, OpenHands, cline | 11% | git-friendly, debuggable |
-| Mechanical (non-LLM) extraction at build time + LLM at query time | basic-memory, aider, memvid, code-review-graph (tree-sitter parses produce all structural nodes; LLM is only invoked at query time, not extraction) | 14% | predictable, free, deterministic; misses semantic nuance |
+| LLM-based entity / fact extraction | ragflow, mem0, graphiti, cognee, claude-mem, LightRAG, khoj, graphrag, onyx, MaxKB, WeKnora, Understand-Anything, MemOS, byterover-cli, deer-flow, haystack, OpenViking, deepwiki-open, memU, claude-obsidian (Claude reads source → extracts entities/concepts → wikilinked Obsidian Markdown pages) | 43% | quality high, cost scales with corpus / turns |
+| Document inputs (PDF / DOCX / MD …) | ragflow, FastGPT, cognee, basic-memory, LightRAG, khoj, graphrag, AstrBot, onyx, MaxKB, memvid, WeKnora, haystack, OpenViking, letta | 33% | broad source coverage, may need OCR/layout |
+| Per-format / specialized chunking | ragflow, FastGPT, cognee, graphrag, AstrBot, onyx, MaxKB, memvid, WeKnora, Understand-Anything, haystack | 24% | strong on document variety, more code surface |
+| Conversation / episode / session inputs | ragflow, mem0, graphiti, cognee, OpenHands, claude-mem, khoj, MaxKB, WeKnora, MemOS, byterover-cli, deer-flow, OpenViking, letta, memU | 33% | hands-off DX for agent memory |
+| Tree-sitter for code awareness | claude-mem, cline, aider, Understand-Anything, code-review-graph (32 languages incl. Vue SFC, Solidity, Dart, R, Perl, Lua, Jupyter / Databricks notebooks) | 11% | language-aware extraction |
+| Hand-curated markdown KB (rules / notes / microagents) | basic-memory, OpenHands, cline | 7% | git-friendly, debuggable |
+| Mechanical (non-LLM) extraction at build time + LLM at query time | basic-memory, aider, memvid, code-review-graph (tree-sitter parses produce all structural nodes; LLM is only invoked at query time, not extraction) | 9% | predictable, free, deterministic; misses semantic nuance |
 
 **Singletons** (1 repo only):
 
@@ -254,17 +255,26 @@ Storage breaks down into seven roles. **Vector stores** dominate the cohort (onl
 
 ## Adoption — Retrieval
 
-**Hybrid BM25 + dense is the floor (43%)** — the cohort's baseline retrieval shape; graph-traversal retrieval reaches 40% as graphRAG patterns mature. Reranker adoption splits along open-source vs cloud-API lines: HuggingFace cross-encoders (30%) lead self-host stacks, while pluggable rerank-provider abstractions (27%) trade depth for vendor flexibility.
+**Hybrid BM25 + dense is the cohort's baseline retrieval shape (28% of cohort)**; graph-traversal retrieval reaches 26% as graphRAG patterns mature. Reranker adoption is dense *within* the 11 repos that ship any reranker (≈73% adopt a pluggable provider abstraction; ≈82% offer HuggingFace / sentence-transformer rerankers) but only 11/46 of the cohort ships rerankers at all.
 
-| Component | Used by | % | Trade-offs |
+### Retrieval pattern (n=46)
+
+| Pattern | Used by | Adoption | Trade-offs |
 |---|---|---|---|
-| Hybrid BM25 + dense | ragflow, mem0, FastGPT, graphiti, basic-memory, claude-mem, AstrBot, onyx, MaxKB, memvid, WeKnora, haystack, code-review-graph (FTS5 keyword + optional sentence-transformers/Gemini/MiniMax embeddings) | 43% | text-search floor; khoj/cognee/graphrag use vector / vector+graph instead |
-| Graph-traversal retrieval (incl. BFS / directory-recursive / multi-hop) | ragflow, mem0, graphiti, cognee, basic-memory, graphrag, memvid, WeKnora, Understand-Anything, MemOS, OpenViking, code-review-graph (BFS impact analysis + Leiden communities) | 40% | richer multi-hop |
-| HuggingFace / sentence-transformer reranker | ragflow, mem0, graphiti, khoj, onyx, MaxKB, WeKnora, MemOS, haystack | 30% | self-host friendly, slower than API |
-| Pluggable rerank-provider abstraction (vendor-agnostic) | ragflow, mem0, FastGPT, AstrBot, onyx, MaxKB, WeKnora, haystack | 27% | one config knob covers many backends; trades depth for breadth |
-| Cohere reranker (explicit) | ragflow, mem0, onyx, MaxKB | 14% | strong default, paid API |
-| BGE reranker (explicit) | mem0, graphiti | 7% | open-weight strong reranker |
-| LLM-as-reranker | mem0, graphiti | 7% | great quality, latency-heavy |
+| Hybrid BM25 + dense | ragflow, mem0, FastGPT, graphiti, basic-memory, claude-mem, AstrBot, onyx, MaxKB, memvid, WeKnora, haystack, code-review-graph (FTS5 keyword + optional sentence-transformers/Gemini/MiniMax embeddings) | 28% | text-search floor; khoj/cognee/graphrag use vector / vector+graph instead |
+| Graph-traversal retrieval (incl. BFS / directory-recursive / multi-hop) | ragflow, mem0, graphiti, cognee, basic-memory, graphrag, memvid, WeKnora, Understand-Anything, MemOS, OpenViking, code-review-graph (BFS impact analysis + Leiden communities) | 26% | richer multi-hop |
+
+### Reranker (n=11)
+
+Universe = repos that ship any reranker: ragflow, mem0, graphiti, FastGPT, AstrBot, onyx, MaxKB, WeKnora, MemOS, haystack, khoj.
+
+| Component | Used by | Adoption | Trade-offs |
+|---|---|---|---|
+| HuggingFace / sentence-transformer reranker | ragflow, mem0, graphiti, khoj, onyx, MaxKB, WeKnora, MemOS, haystack | 82% | self-host friendly, slower than API |
+| Pluggable rerank-provider abstraction (vendor-agnostic) | ragflow, mem0, FastGPT, AstrBot, onyx, MaxKB, WeKnora, haystack | 73% | one config knob covers many backends; trades depth for breadth |
+| Cohere reranker (explicit) | ragflow, mem0, onyx, MaxKB | 36% | strong default, paid API |
+| BGE reranker (explicit) | mem0, graphiti | 18% | open-weight strong reranker |
+| LLM-as-reranker | mem0, graphiti | 18% | great quality, latency-heavy |
 
 **Singletons** (1 repo only):
 
@@ -289,20 +299,20 @@ Storage breaks down into seven roles. **Vector stores** dominate the cohort (onl
   - **Tree-text-memory hierarchical retrieval** — splits `organize/` (write-time) vs `retrieve/` (read-time)
   - Preference-text-memory dedicated retrievers
 
-## Adoption — Memory model
+## Adoption — Memory model (n=46)
 
-**Self-update on every input dominates (63%)**, with auto-structured memory close behind (53%) — the cohort default is "always-fresh, write-amplification". Cross-session memory is universal in memory-frameworks but absent in 6 cohort repos (cline, aider, graphrag, haystack, deepwiki-open, code-review-graph) that treat each session as cold.
+**Self-update on every input dominates (41%)**, with auto-structured memory close behind (35%) — the cohort default is "always-fresh, write-amplification". Cross-session memory is universal in memory-frameworks but absent in 6 cohort repos (cline, aider, graphrag, haystack, deepwiki-open, code-review-graph) that treat each session as cold.
 
-| Pattern | Used by | % | Trade-offs |
+| Pattern | Used by | Adoption | Trade-offs |
 |---|---|---|---|
-| Self-update on each input | ragflow, mem0, graphiti, cognee, basic-memory, claude-mem, khoj, onyx, MaxKB, WeKnora, Understand-Anything, MemOS, byterover-cli, deer-flow, OpenViking, letta, code-review-graph, memU, claude-obsidian (4-event hooks: SessionStart / PostCompact / PostToolUse[Write\|Edit] / Stop, with hot-cache rewrite + git auto-commit) | 63% | always-fresh, write-amplification |
-| Auto-structured memory from inputs | ragflow, mem0, graphiti, cognee, basic-memory, claude-mem, khoj, onyx, MaxKB, memvid, Understand-Anything, MemOS, deer-flow, OpenViking, letta, memU | 53% | hands-off DX |
-| Hand-authored rules / skill / microagent files | basic-memory, OpenHands, cline, AstrBot, WeKnora, Understand-Anything, byterover-cli, deer-flow, claude-obsidian (11 SKILL.md files following Claude Code's plugin spec) | 30% | git-friendly, predictable; doesn't scale without curation |
-| AGPL-3.0-or-later license | basic-memory, OpenHands, claude-mem, khoj, AstrBot, OpenViking | 20% | aggressive copyleft; ship-to-end-user pattern |
-| Two-tier KB + agent-memory split | ragflow, khoj | 7% | per-corpus retrieval separated from per-user memory |
-| Human-in-the-loop policy/strategy/interface as a typed framework subsystem | byterover-cli (curate workflow), haystack | 7% | rare in cohort; haystack ships the most explicit HITL primitives |
-| No cross-session memory at all | cline, aider, graphrag, haystack, deepwiki-open, code-review-graph | 20% | session-cold each time; users supply context explicitly |
-| Temporal awareness in memory | graphiti, cognee, memvid | 10% | enables "as-of-date" queries; complex to implement |
+| Self-update on each input | ragflow, mem0, graphiti, cognee, basic-memory, claude-mem, khoj, onyx, MaxKB, WeKnora, Understand-Anything, MemOS, byterover-cli, deer-flow, OpenViking, letta, code-review-graph, memU, claude-obsidian (4-event hooks: SessionStart / PostCompact / PostToolUse[Write\|Edit] / Stop, with hot-cache rewrite + git auto-commit) | 41% | always-fresh, write-amplification |
+| Auto-structured memory from inputs | ragflow, mem0, graphiti, cognee, basic-memory, claude-mem, khoj, onyx, MaxKB, memvid, Understand-Anything, MemOS, deer-flow, OpenViking, letta, memU | 35% | hands-off DX |
+| Hand-authored rules / skill / microagent files | basic-memory, OpenHands, cline, AstrBot, WeKnora, Understand-Anything, byterover-cli, deer-flow, claude-obsidian (11 SKILL.md files following Claude Code's plugin spec) | 20% | git-friendly, predictable; doesn't scale without curation |
+| AGPL-3.0-or-later license | basic-memory, OpenHands, claude-mem, khoj, AstrBot, OpenViking | 13% | aggressive copyleft; ship-to-end-user pattern |
+| Two-tier KB + agent-memory split | ragflow, khoj | 4% | per-corpus retrieval separated from per-user memory |
+| Human-in-the-loop policy/strategy/interface as a typed framework subsystem | byterover-cli (curate workflow), haystack | 4% | rare in cohort; haystack ships the most explicit HITL primitives |
+| No cross-session memory at all | cline, aider, graphrag, haystack, deepwiki-open, code-review-graph | 13% | session-cold each time; users supply context explicitly |
+| Temporal awareness in memory | graphiti, cognee, memvid | 7% | enables "as-of-date" queries; complex to implement |
 
 **Singletons** (1 repo only):
 
@@ -334,32 +344,34 @@ Storage breaks down into seven roles. **Vector stores** dominate the cohort (onl
 
 ## Adoption — MCP / connectors
 
-**MCP is near-universal among production-shaped repos** — 60% expose servers, 57% are clients, with 30% staying protocol-neutral. **SDK choice splits cleanly along language lines:** FastMCP dominates Python stacks, `@modelcontextprotocol/sdk` dominates TypeScript/Bun stacks. The "no MCP" camp is structurally distinct — every entry is a library, pipeline, plugin, or infra-class repo, not a deployable product.
+**MCP is mainstream among production-shaped repos** — 39% expose servers, 37% are clients, with 20% staying protocol-neutral. **SDK choice splits cleanly along language lines:** FastMCP dominates Python stacks, `@modelcontextprotocol/sdk` dominates TypeScript/Bun stacks. The "no MCP" camp is structurally distinct — every entry is a library, pipeline, plugin, or infra-class repo, not a deployable product.
 
-### Role type
+### Role type (n=46)
 
-| Role | Used by | % | Trade-offs |
+| Role | Used by | Adoption | Trade-offs |
 |---|---|---|---|
-| MCP server exposed | ragflow, mem0, FastGPT, graphiti, cognee, basic-memory, OpenHands, claude-mem, onyx, MaxKB, WeKnora, MemOS, byterover-cli, deer-flow, haystack, OpenViking, letta, code-review-graph | 60% | drop-in for Claude Code / Cursor / Codex / Desktop |
-| MCP client used | ragflow, mem0, FastGPT, cognee, OpenHands, claude-mem, cline, khoj, AstrBot, onyx, MaxKB, WeKnora, byterover-cli, deer-flow, haystack, OpenViking, letta | 57% | outbound tool use; near-universal among production-shaped repos |
-| No MCP at all | aider, LightRAG, graphrag, memvid, Understand-Anything, FalkorDB, deepwiki-open, memU, claude-obsidian | 30% | library/pipeline/plugin/infra-class — intentionally protocol-neutral; claude-obsidian uses Claude Code's native skill/agent/hook surface instead |
+| MCP server exposed | ragflow, mem0, FastGPT, graphiti, cognee, basic-memory, OpenHands, claude-mem, onyx, MaxKB, WeKnora, MemOS, byterover-cli, deer-flow, haystack, OpenViking, letta, code-review-graph | 39% | drop-in for Claude Code / Cursor / Codex / Desktop |
+| MCP client used | ragflow, mem0, FastGPT, cognee, OpenHands, claude-mem, cline, khoj, AstrBot, onyx, MaxKB, WeKnora, byterover-cli, deer-flow, haystack, OpenViking, letta | 37% | outbound tool use; near-universal among production-shaped repos |
+| No MCP at all | aider, LightRAG, graphrag, memvid, Understand-Anything, FalkorDB, deepwiki-open, memU, claude-obsidian | 20% | library/pipeline/plugin/infra-class — intentionally protocol-neutral; claude-obsidian uses Claude Code's native skill/agent/hook surface instead |
 
-### SDK / framework
+### SDK / framework (n=37)
 
-| SDK | Used by | % | Trade-offs |
+Universe = repos that ship any MCP integration (= 46 − 9 no-MCP).
+
+| SDK | Used by | Adoption | Trade-offs |
 |---|---|---|---|
-| **FastMCP** (Python, Pydantic-backed) | OpenHands, basic-memory, MaxKB, MemOS, onyx, DocsGPT, code-review-graph, hindsight | 17% | dominant Python MCP SDK in cohort |
-| **`@modelcontextprotocol/sdk`** (TS/JS) | claude-mem, cline, FastGPT, sim, byterover-cli, context-mode, honcho | 15% | dominant TS/Bun MCP SDK in cohort |
-| **PydanticAI** agent runtime | mindsdb, hindsight | 4% | typed sub-agents + output validation; cohort-novel "Pydantic-shaped Python agentic stack" |
+| **FastMCP** (Python, Pydantic-backed) | OpenHands, basic-memory, MaxKB, MemOS, onyx, DocsGPT, code-review-graph, hindsight | 22% | dominant Python MCP SDK in cohort |
+| **`@modelcontextprotocol/sdk`** (TS/JS) | claude-mem, cline, FastGPT, sim, byterover-cli, context-mode, honcho | 19% | dominant TS/Bun MCP SDK in cohort |
+| **PydanticAI** agent runtime | mindsdb, hindsight | 5% | typed sub-agents + output validation; cohort-novel "Pydantic-shaped Python agentic stack" |
 
 **SDK singletons:**
 
 - WeKnora — vanilla `mcp.server.stdio` Python SDK (separate `mcp-server/` project) + `mark3labs/mcp-go` (Go client) — cohort's only Go MCP user
 - MaxKB — uniquely **runtime-synthesizes FastMCP per user-authored Python tool** via `ast` rewriting (every tool gets its own ad-hoc `FastMCP(uuid)` module)
 
-### Distribution / install targets
+### Distribution / install targets (n=46)
 
-| Mechanism | Used by | % | Notes |
+| Mechanism | Used by | Adoption | Notes |
 |---|---|---|---|
 | Auto-install MCP config into N AI coding tools (one command) | code-review-graph (11 tools), context-mode (12 adapters + 14 configs), byterover-cli (22+ agents), GitNexus | 9% | growing cohort meta-pattern — "stop telling users to edit JSON manually" |
 | ClawHub Skill marketplace | WeKnora, DeepTutor | 4% | CN-ecosystem distribution channel |
@@ -383,11 +395,11 @@ Storage breaks down into seven roles. **Vector stores** dominate the cohort (onl
 - Understand-Anything — `.claude-plugin/plugin.json` + 8 slash-commands + 9 agents + 2 hooks (no MCP)
 - MemOS — 4 first-party apps shipped (cloud-and-self-hosted-plugin-pair pattern); hookable plugin system with typed hook-spec registry
 
-## Adoption — Observability / Eval
+## Adoption — Observability / Eval (n=46)
 
 **Production agentic stacks default to LLM-tracing-and-metrics tools (Langfuse + OpenTelemetry + Prometheus + Sentry) rather than RAG-specific eval frameworks.** The legacy "RAG evaluation" reference set (RAGAS, Phoenix/Arize, Inspect AI, Promptfoo, TruLens) is conspicuously absent — surveyed cohort entries either ship in-tree benchmark harnesses or skip formal eval entirely.
 
-| Tool | Used by | % | Trade-offs |
+| Tool | Used by | Adoption | Trade-offs |
 |---|---|---|---|
 | Langfuse | deer-flow, mindsdb, cognee, honcho, OpenViking, Yuxi | 13% | open self-hostable LLM tracing + eval; OpenTelemetry-compatible; cohort's most-adopted observability tool |
 | OpenTelemetry / OTEL | OpenHands, graphiti, hindsight, letta | 9% | vendor-neutral tracing standard; pairs with any backend (Langfuse / Jaeger / Honeycomb / Datadog) |
@@ -415,14 +427,14 @@ These are cohort-wide patterns the surveys surfaced. Each top-level bullet leads
 
 ### Storage and licensing
 
-- **MCP server adoption (60%) edges out client (57%).** Server in 18/30 repos, client in 17.
+- **MCP server adoption (39%) edges out client (37%).** Server in 18/46 repos, client in 17.
   - Nine repos run no MCP at all: aider, LightRAG, graphrag, memvid, Understand-Anything, FalkorDB, deepwiki-open, memU, claude-obsidian.
   - Common shape: all are libraries, pipelines, plugins, or infra-class.
   - **Pattern hardening:** products run MCP; libraries / plugins / pipelines don't.
   - anything-llm surfaces a 3rd MCP role — *host* — distinct from server and client (see "MCP role types" below).
 
 - **Postgres dominates metadata; pgvector leads vector backends; "no DB at all" is now its own camp.**
-  - Numbers: Postgres 14/30 (47%), SQLite 10/30 (33%), pgvector 7/30 (23%), OpenSearch 6/30 (20%).
+  - Numbers: Postgres 14/41 (34%, of repos with a metadata DB), SQLite 9/41 (22%), pgvector 7/39 (18%, of repos with a vector store), OpenSearch 5/39 (13%).
   - **No-DB camp (5 repos)** — five different shapes, all opt out of databases entirely:
     - cline — `~/.cline/data/*.json` per-user atomic file stores
     - memvid — single `.mv2` binary file
@@ -514,7 +526,7 @@ These are cohort-wide patterns the surveys surfaced. Each top-level bullet leads
   - *Mention-based* — cline; `.clinerules/*.md` (rules) + `@file:lines` mentions per-message; no recall, no extraction.
   - *Computed / repo-map* — aider; PageRank-weighted symbol selection from tree-sitter parses; no LLM extraction, no MCP, no cross-session memory.
 
-- **Mechanical (non-LLM) extraction works** — useful counter-example to the "more LLM = more quality" assumption. **4/30 cohort entries** ship serviceable KBs without LLM cost:
+- **Mechanical (non-LLM) extraction works** — useful counter-example to the "more LLM = more quality" assumption. **4/46 cohort entries** ship serviceable KBs without LLM cost:
   - basic-memory — grammar-based observation parser
   - aider — tree-sitter PageRank
   - memvid — `Rules` extraction mode (default)
@@ -813,7 +825,7 @@ Bi-temporal KG library — only cohort entry that supports "as-of-date" queries.
 - **16 pre-baked search recipes** (Combined×3 + Edge×5 + Node×5 + Community×3) over 4 reranker modes (RRF / node-distance / MMR / cross-encoder)
 
 ### [deepset-ai/haystack](https://github.com/deepset-ai/haystack)
-*kb-app · Apache-2.0 · [survey](surveys/deepset-ai__haystack.md)*
+*kb-framework · Apache-2.0 · [survey](surveys/deepset-ai__haystack.md)*
 
 The cohort's elder-statesman framework (created 2019-11).
 

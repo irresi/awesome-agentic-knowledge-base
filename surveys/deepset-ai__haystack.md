@@ -2,7 +2,7 @@
 
 **Date:** 2026-05-02
 **Stars:** 25,045 · **Last push:** 2026-04-30 · **Created:** 2019-11 · **Version:** `haystack-ai 2.29.0-rc0` (Apache-2.0)
-**Category:** kb-app
+**Category:** kb-framework
 **Slug:** [deepset-ai/haystack](https://github.com/deepset-ai/haystack)
 
 ---
