@@ -1,14 +1,10 @@
 <h1 align="center">🧠 Awesome Agentic Knowledge Base</h1>
 
 <p align="center">
-  Empirical map of how trending AI agents build their knowledge base systems.
-  Every entry is backed by a survey report of an actual repo. Components are ranked
-  by adoption frequency across the surveyed cohort, not by fame.
+  An empirical map of knowledge base systems in top AI agents. Components are code-verified from high-star GitHub repositories and ranked strictly by actual adoption frequency, not vendor claims.
 </p>
 
-> *Living document — surveys verified manually, contributions welcome.*
-
-> *Code-verified, not vendor-described. Cohort selected by GitHub stars; components ranked by how many cohort repos actually adopt them.*
+> *Living document — manually verified, contributions welcome.*
 
 ## TL;DR — what 46 trending open-source ai-agent repos actually use
 
