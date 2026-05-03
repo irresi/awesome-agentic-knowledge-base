@@ -654,9 +654,7 @@ Out of scope for the surveyed cohort — no source to clone, no survey to write 
 
 ## Contributing
 
-PRs that add a new survey are welcome. To propose a new repo for the cohort, open an issue with a link, a one-paragraph rationale, and the closest existing cohort entry it would extend or contrast.
-
-**Recipes** ([`recipes/`](recipes/)) are also open for contribution — both new agent recipes composed from cohort repos *and* verification reports on existing ones (which 🟢 stages actually assembled in a weekend, where 🟡 / 🔴 stages broke down). Open a PR with a build log or an issue with a "tried recipe N, here's what happened" writeup.
+PRs welcome — new surveys, new [recipes](recipes/), or recipe verification reports (which 🟢 stages actually built in a weekend, where 🟡 / 🔴 broke down). To propose a new repo for the cohort, open an issue with a link, a one-paragraph rationale, and the closest existing cohort entry it would extend or contrast.
 
 ## License
 
