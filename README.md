@@ -4,20 +4,20 @@
   An empirical map of knowledge base systems in top AI agents. Components are code-verified from high-star GitHub repositories and ranked strictly by actual adoption frequency, not vendor claims.
 </p>
 
-## TL;DR — what 46 trending open-source ai-agent repos actually use
+## TL;DR — what 47 trending open-source ai-agent repos actually use
 
-- 20 of 46 (43%) use LLM-based entity extraction — but **4 ship serviceable KBs without any LLM cost** (basic-memory, aider, memvid, code-review-graph)
-- 18 of 46 expose MCP servers, 17 are clients — **9 intentionally avoid MCP** (all libraries / pipelines / plugins / infra)
+- 21 of 47 (45%) use LLM-based entity extraction — but **4 ship serviceable KBs without any LLM cost** (basic-memory, aider, memvid, code-review-graph)
+- 18 of 47 expose MCP servers, 17 are clients — **10 intentionally avoid MCP** (all libraries / pipelines / plugins / infra / one Tauri desktop)
 - Postgres leads metadata, pgvector leads vector backends, Redis is the default cache — full breakdown in [Adoption — Storage](#adoption--storage)
 - 12 repos use no graph at all — **in-process NetworkX is more common than Neo4j**
 - "No DB at all" is now its own camp — **5 repos, 5 different shapes** (from `.json` files to a single `.mv2` binary to Obsidian vaults)
 - License hardens with deployment shape: **library → product → infra mirrors MIT → AGPL → ELv2/SSPL**
 
-> Numbers are cohort-wide (n=46) unless noted. Adoption tables below switch to role-conditional denominators (e.g. `n=39` for vector adopters). Every claim links to an individual repo survey under [`surveys/`](./surveys/).
+> Numbers are cohort-wide (n=47) unless noted. Adoption tables below switch to role-conditional denominators (e.g. `n=40` for vector adopters). Every claim links to an individual repo survey under [`surveys/`](./surveys/).
 
 ## Open-source repos
 
-46 trending open-source ai-agent repos (the **cohort**), sorted by GitHub star count. **kb-app is the largest category (15 repos)**, followed by memory-framework (12), wiki-compiler (6), coding-agent (5), graphrag (3), infra-layer (3), and kb-framework (2: llama_index + haystack) — both downstream aggregators of much of the rest of the cohort.
+47 trending open-source ai-agent repos (the **cohort**), sorted by GitHub star count. **kb-app is the largest category (16 repos)**, followed by memory-framework (12), wiki-compiler (6), coding-agent (5), graphrag (3), infra-layer (3), and kb-framework (2: llama_index + haystack) — both downstream aggregators of much of the rest of the cohort.
 
 **Categories**
 
@@ -77,6 +77,7 @@
 | [circlemind-ai/fast-graphrag](https://github.com/circlemind-ai/fast-graphrag) | graphrag | Library-only GraphRAG; Personalized PageRank as primary retrieval primitive + pickle-only persistence ([survey](surveys/circlemind-ai__fast-graphrag.md)) |
 | [plastic-labs/honcho](https://github.com/plastic-labs/honcho) | memory-framework | Plastic Labs's memory library; peer paradigm + scheduled "memory consolidation agent" (Dreamer) ([survey](surveys/plastic-labs__honcho.md)) |
 | [basicmachines-co/basic-memory](https://github.com/basicmachines-co/basic-memory) | memory-framework | Local-first Zettelkasten + KG over markdown files; rule-based grammar (no LLM extraction) ([survey](surveys/basicmachines-co__basic-memory.md)) |
+| [tinyhumansai/openhuman](https://github.com/tinyhumansai/openhuman) | kb-app | Rust-core Tauri desktop Personal AI; 4-phase Memory-Tree (bucket-seal L0=50k → L1+ fanout=10) writes an Obsidian-readable vault + cohort-first MeetAgent + TokenJuice ([survey](surveys/tinyhumansai__openhuman.md)) |
 
 ## Patterns observed
 
