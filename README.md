@@ -633,6 +633,7 @@ Out of scope for the surveyed cohort — no source to clone, no survey to write 
 - **[Mem0 Cloud](https://mem0.ai/)** — hosted tier of the cohort's [`mem0ai/mem0`](surveys/mem0ai__mem0.md). Same atomic-fact extraction, SaaS-managed.
 - **[Zep Cloud](https://www.getzep.com/)** — hosted tier built on the cohort's [`getzep/graphiti`](surveys/getzep__graphiti.md). Bi-temporal KG memory as a service.
 - **[Membase](https://membase.so/)** — personal memory layer SaaS; KG auto-built from connected apps (Gmail / Slack / Notion / GitHub / Drive) and delivered to agents over MCP. Connector-driven, prosumer-flavored counterpart to mem0 / Zep.
+- **[Remio](https://remio.ai/)** — local-first personal knowledge base that pre-parses files, webpages, recordings, notes, emails, messages, and images into indexed and vector-searchable context for lower-token agent retrieval, instead of repeated ad-hoc folder scans or raw file reads.
 
 ### Enterprise search & Copilot-style assistants
 
