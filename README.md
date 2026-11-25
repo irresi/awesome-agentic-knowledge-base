@@ -639,6 +639,7 @@ Out of scope for the surveyed cohort — no source to clone, no survey to write 
 - **[Glean](https://www.glean.com/)** — SaaS-connector enterprise search + agent platform; the closed-source shape that the cohort's [`onyx-dot-app/onyx`](surveys/onyx-dot-app__onyx.md) most directly competes with.
 - **[Microsoft 365 Copilot + Microsoft Graph](https://www.microsoft.com/microsoft-365/copilot)** — grounded on Microsoft Graph (mail / files / Teams); connectors framework for non-Microsoft sources.
 - **[Notion AI](https://www.notion.com/product/ai)** — workspace-grounded assistant; closest closed analogue to the `wiki-compiler` entries.
+- **[Enhanciar](https://enhanciar.in)** — answers from Slack / Gmail / Drive / Notion / Jira / Linear / GitHub with source links; drafts follow-up actions for human approval; also exposed over MCP.
 
 ---
 
